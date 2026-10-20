@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Advertisers")
+@Table(name = "advertisers")
 public class Advertiser extends Profile{
 
     @Column(nullable = false)
@@ -16,14 +16,15 @@ public class Advertiser extends Profile{
     String sector;
 
     @Column(nullable = false)
-    String webSite;
+    String website;
 
     protected Advertiser(){}
 
-    public Advertiser(String companyName, String sector, String webSite, String email) {
+    public Advertiser(String companyName, String sector, String website, String email) {
+        super(email);
         this.companyName = companyName;
         this.sector = sector;
-        this.webSite = webSite;
+        this.website = website;
     }
 
     public String getCompanyName() {
@@ -42,11 +43,11 @@ public class Advertiser extends Profile{
         this.sector = sector;
     }
 
-    public String getWebSite() {
-        return webSite;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setWebSite(String webSite) {
-        this.webSite = webSite;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }
