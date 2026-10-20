@@ -1,3 +1,6 @@
 spring:
   application:
     name: AffiliateLinkApplication
+  jpa:
+    hibernate:
+      ddl-auto: validate
