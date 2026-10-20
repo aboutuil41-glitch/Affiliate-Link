@@ -11,8 +11,8 @@ import java.time.LocalDate;
 public abstract class Profile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
     @Column(nullable = false, unique = true)
     String email;
@@ -38,11 +38,11 @@ public abstract class Profile {
         this.createdAt = LocalDate.now();
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
