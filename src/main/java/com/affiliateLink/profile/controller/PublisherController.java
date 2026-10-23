@@ -5,6 +5,7 @@ import com.affiliateLink.profile.dto.PublisherRequest;
 import com.affiliateLink.profile.dto.PublisherResponse;
 import com.affiliateLink.profile.services.PublisherService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PublisherController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public PublisherResponse create(@RequestBody @Valid PublisherRequest pr){
         return ps.create(pr);
     }
