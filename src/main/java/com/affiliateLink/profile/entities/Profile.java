@@ -1,5 +1,6 @@
 package com.affiliateLink.profile.entities;
 
+import com.affiliateLink.common.exception.BusinessRuleException;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -27,7 +28,22 @@ public abstract class Profile {
     public enum Status{
         PENDING,
         ACTIVE,
-        SUSPENDED
+        SUSPENDED;
+
+    public boolean checkStatus(Status target){
+        return switch (this){
+            case PENDING, SUSPENDED -> target == ACTIVE;
+            case ACTIVE -> target == SUSPENDED;
+        };
+    }
+    }
+
+    public void changeStatus(Status newStatus) {
+        if (!status.checkStatus(newStatus)) {
+            throw new BusinessRuleException(
+                    "Cannot change status from " + status + " to " + newStatus);
+        }
+        this.status = newStatus;
     }
 
     protected Profile() {}
