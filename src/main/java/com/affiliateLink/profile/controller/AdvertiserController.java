@@ -3,15 +3,15 @@ package com.affiliateLink.profile.controller;
 
 import com.affiliateLink.profile.dto.AdvertiserRequest;
 import com.affiliateLink.profile.dto.AdvertiserResponse;
-import com.affiliateLink.profile.dto.PublisherResponse;
 import com.affiliateLink.profile.services.AdvertiserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/advertiser")
+@RequestMapping("/api/advertisers")
 public class AdvertiserController {
     private final AdvertiserService as;
 
@@ -20,6 +20,7 @@ public class AdvertiserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public AdvertiserResponse create(@RequestBody @Valid AdvertiserRequest request){
         return as.create(request);
     }
