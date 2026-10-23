@@ -23,9 +23,14 @@ public class Publisher extends Profile{
     String country;
 
 
-    public enum Niche{
-        EATING,
-        GAMING
+    public enum Niche {
+        BEAUTY,
+        TECH,
+        GAMING,
+        TRAVEL,
+        LIFESTYLE,
+        FOOD,
+        SPORT
     }
 
     protected Publisher() {}
