@@ -1,15 +1,13 @@
-package com.affiliateLink.profile.services;
+package com.affiliateLink.profile.internal.services;
 
 
 import com.affiliateLink.common.exception.BusinessRuleException;
 import com.affiliateLink.common.exception.ResourceNotFoundException;
-import com.affiliateLink.profile.dto.AdvertiserRequest;
-import com.affiliateLink.profile.dto.AdvertiserResponse;
-import com.affiliateLink.profile.dto.PublisherResponse;
-import com.affiliateLink.profile.entities.Advertiser;
-import com.affiliateLink.profile.entities.Publisher;
-import com.affiliateLink.profile.repositories.AdvertiserRepository;
-import com.affiliateLink.profile.repositories.ProfileRepository;
+import com.affiliateLink.profile.internal.dto.AdvertiserRequest;
+import com.affiliateLink.profile.internal.dto.AdvertiserResponse;
+import com.affiliateLink.profile.internal.entities.Advertiser;
+import com.affiliateLink.profile.internal.repositories.AdvertiserRepository;
+import com.affiliateLink.profile.internal.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

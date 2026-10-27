@@ -1,4 +1,4 @@
-package com.affiliateLink.profile.entities;
+package com.affiliateLink.profile.internal.entities;
 
 import com.affiliateLink.common.exception.BusinessRuleException;
 import jakarta.persistence.*;

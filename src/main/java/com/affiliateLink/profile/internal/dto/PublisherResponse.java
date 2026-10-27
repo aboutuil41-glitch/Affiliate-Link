@@ -1,7 +1,7 @@
-package com.affiliateLink.profile.dto;
+package com.affiliateLink.profile.internal.dto;
 
-import com.affiliateLink.profile.entities.Profile;
-import com.affiliateLink.profile.entities.Publisher;
+import com.affiliateLink.profile.internal.entities.Profile;
+import com.affiliateLink.profile.internal.entities.Publisher;
 
 import java.time.LocalDate;
 

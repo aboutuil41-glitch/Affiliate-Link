@@ -1,7 +1,7 @@
 package com.affiliateLink.profile;
 
-import com.affiliateLink.profile.entities.Publisher;
-import com.affiliateLink.profile.repositories.PublisherRepository;
+import com.affiliateLink.profile.internal.entities.Publisher;
+import com.affiliateLink.profile.internal.repositories.PublisherRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

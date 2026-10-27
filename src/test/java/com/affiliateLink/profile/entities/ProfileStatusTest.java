@@ -1,6 +1,8 @@
 package com.affiliateLink.profile.entities;
 
 import com.affiliateLink.common.exception.BusinessRuleException;
+import com.affiliateLink.profile.internal.entities.Profile;
+import com.affiliateLink.profile.internal.entities.Publisher;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

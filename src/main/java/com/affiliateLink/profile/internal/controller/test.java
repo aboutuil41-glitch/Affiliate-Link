@@ -1,9 +1,9 @@
-package com.affiliateLink.profile.controller;
+package com.affiliateLink.profile.internal.controller;
 
-import com.affiliateLink.profile.entities.Advertiser;
-import com.affiliateLink.profile.entities.Profile;
-import com.affiliateLink.profile.entities.Publisher;
-import com.affiliateLink.profile.repositories.ProfileRepository;
+import com.affiliateLink.profile.internal.entities.Advertiser;
+import com.affiliateLink.profile.internal.entities.Profile;
+import com.affiliateLink.profile.internal.entities.Publisher;
+import com.affiliateLink.profile.internal.repositories.ProfileRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

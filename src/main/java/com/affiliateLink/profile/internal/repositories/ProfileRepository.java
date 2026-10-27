@@ -1,6 +1,6 @@
-package com.affiliateLink.profile.repositories;
+package com.affiliateLink.profile.internal.repositories;
 
-import com.affiliateLink.profile.entities.Profile;
+import com.affiliateLink.profile.internal.entities.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProfileRepository extends JpaRepository<Profile, Long> {

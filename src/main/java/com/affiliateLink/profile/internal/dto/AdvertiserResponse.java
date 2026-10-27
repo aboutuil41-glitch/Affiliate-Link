@@ -1,7 +1,7 @@
-package com.affiliateLink.profile.dto;
+package com.affiliateLink.profile.internal.dto;
 
-import com.affiliateLink.profile.entities.Advertiser;
-import com.affiliateLink.profile.entities.Profile;
+import com.affiliateLink.profile.internal.entities.Advertiser;
+import com.affiliateLink.profile.internal.entities.Profile;
 
 public record AdvertiserResponse(
         String email,

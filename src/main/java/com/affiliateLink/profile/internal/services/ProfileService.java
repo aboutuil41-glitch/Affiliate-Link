@@ -1,8 +1,8 @@
-package com.affiliateLink.profile.services;
+package com.affiliateLink.profile.internal.services;
 
 import com.affiliateLink.common.exception.ResourceNotFoundException;
-import com.affiliateLink.profile.entities.Profile;
-import com.affiliateLink.profile.repositories.ProfileRepository;
+import com.affiliateLink.profile.internal.entities.Profile;
+import com.affiliateLink.profile.internal.repositories.ProfileRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
