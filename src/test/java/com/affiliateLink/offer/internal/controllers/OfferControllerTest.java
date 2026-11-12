@@ -49,3 +49,12 @@ class OfferControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    // ---------- GET /api/offres ----------
+
+    @Test
+    void shouldReturn200WhenSearchingOffers() throws Exception {
+        when(offerService.search(any(), any(), any(), any(), any())).thenReturn(Page.empty());
+
+        mvc.perform(get("/api/offres?niche=fitness"))
+                .andExpect(status().isOk());
+    }
