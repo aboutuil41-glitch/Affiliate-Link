@@ -146,4 +146,18 @@ class OfferServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class);
     }
 
+    // ---------- search ----------
+
+    @Test
+    void shouldRejectSortOnAFieldThatIsNotAllowed() {
+        // Given
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("banana"));
+
+        // When / Then
+        assertThatThrownBy(() -> service.search(null, null, null, null, pageable))
+                .isInstanceOf(BadRequestException.class);
+        verify(offerRepository, never())
+                .findAll(ArgumentMatchers.<Specification<Offer>>any(), any(Pageable.class));
+    }
+
 }
