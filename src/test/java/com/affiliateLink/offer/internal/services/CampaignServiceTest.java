@@ -190,3 +190,17 @@ class CampaignServiceTest {
         verify(campaignRepository, never()).findAll();
     }
 
+    // ---------- helpers ----------
+
+    private void assertCreateIsRejected(CampaignRequest request) {
+        Offer offer = mock(Offer.class);
+        when(offerRepository.findById(7L)).thenReturn(Optional.of(offer));
+
+        assertThatThrownBy(() -> service.create(7L, request))
+                .isInstanceOf(BadRequestException.class);
+        verify(campaignRepository, never()).save(any());
+    }
+
+    private LocalDate today() {
+        return LocalDate.now();
+    }
