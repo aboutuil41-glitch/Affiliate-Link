@@ -6,6 +6,7 @@ import com.affiliateLink.offer.internal.dto.StatusRequest;
 import com.affiliateLink.offer.internal.entities.Campaign;
 import com.affiliateLink.offer.internal.services.CampaignService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class CampaignController {
 
+//    @Qualifier("CampaignService2")
     private final CampaignService campaignService;
 
     public CampaignController(CampaignService campaignService) {
