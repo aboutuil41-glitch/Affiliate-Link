@@ -83,4 +83,14 @@ class OfferServiceTest {
         verify(tagRepository, never()).save(any(Tag.class));
     }
 
+    @Test
+    void shouldIgnoreBlankTags() {
+        // When
+        Set<Tag> tags = createOfferWithTags(Set.of("   "));
+
+        // Then
+        assertThat(tags).isEmpty();
+        verify(tagRepository, never()).save(any(Tag.class));
+    }
+
 }
