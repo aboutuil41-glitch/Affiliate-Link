@@ -90,3 +90,14 @@ class OfferSearchIT extends AbstractMySqlIT {
         assertThat(firstPage.getContent()).hasSize(2);
         assertThat(secondPage.getContent()).hasSize(1);
     }
+
+    // ---------- sorting ----------
+
+    @Test
+    void shouldSortByTitleAscending() {
+        service.search(null, null, null, "zz", PageRequest.of(0, 20, Sort.by("title").ascending()));
+
+        assertThat(mappedTitles)
+                .containsExactly("Zz Laptop Stand", "Zz Running Shoes", "Zz Yoga Mat");
+    }
+
