@@ -28,3 +28,13 @@ class CampaignControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void shouldReturn404WhenOfferDoesNotExist() throws Exception {
+        when(campaignService.create(anyLong(), any()))
+                .thenThrow(new ResourceNotFoundException("Offer not found: 99"));
+
+        mvc.perform(post("/api/offres/99/campaigns")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_CAMPAIGN))
+                .andExpect(status().isNotFound());
+    }
