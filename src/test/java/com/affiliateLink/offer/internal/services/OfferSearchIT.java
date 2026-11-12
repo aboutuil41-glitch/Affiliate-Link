@@ -77,3 +77,16 @@ class OfferSearchIT extends AbstractMySqlIT {
         assertThat(result.getTotalElements()).isGreaterThanOrEqualTo(3);
         assertThat(mappedTitles).contains("Zz Running Shoes", "Zz Yoga Mat", "Zz Laptop Stand");
     }
+
+    // ---------- pagination ----------
+
+    @Test
+    void shouldPaginateResults() {
+        Page<OfferResponse> firstPage = service.search(null, null, null, "zz", PageRequest.of(0, 2));
+        Page<OfferResponse> secondPage = service.search(null, null, null, "zz", PageRequest.of(1, 2));
+
+        assertThat(firstPage.getTotalElements()).isEqualTo(3);
+        assertThat(firstPage.getTotalPages()).isEqualTo(2);
+        assertThat(firstPage.getContent()).hasSize(2);
+        assertThat(secondPage.getContent()).hasSize(1);
+    }
