@@ -1,4 +1,38 @@
 package com.affiliateLink.offer.internal.services;
+
+import com.affiliateLink.AbstractMySqlIT;
+import com.affiliateLink.offer.internal.dto.OfferResponse;
+import com.affiliateLink.offer.internal.entities.Offer;
+import com.affiliateLink.offer.internal.entities.Tag;
+import com.affiliateLink.offer.internal.mappers.OfferMapper;
+import com.affiliateLink.offer.internal.repositories.OfferRepository;
+import com.affiliateLink.offer.internal.repositories.TagRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+/**
+ * Tests the offer search against a REAL MySQL database (Docker must be running).
+ * Each test is rolled back, so tests don't affect each other.
+ * Test data uses "zz-" / "Zz" values so it never mixes with your seed data.
+ */
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // use the Docker DB, not H2
 class OfferSearchIT extends AbstractMySqlIT {
 
     @Autowired OfferRepository offerRepository;
