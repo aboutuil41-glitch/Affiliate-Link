@@ -10,3 +10,12 @@ class CampaignControllerTest {
              "budget":4000,"payoutModel":"CPA_PERCENT","payoutValue":10}
             """;
 
+    // ---------- POST /api/offres/{offerId}/campaigns ----------
+
+    @Test
+    void shouldReturn201WhenCampaignIsValid() throws Exception {
+        mvc.perform(post("/api/offres/1/campaigns")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_CAMPAIGN))
+                .andExpect(status().isCreated());
+    }
