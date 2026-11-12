@@ -68,4 +68,19 @@ class OfferServiceTest {
         verify(tagRepository, times(1)).save(any(Tag.class));
     }
 
+    @Test
+    void shouldReuseExistingTagInsteadOfCreatingANewOne() {
+        // Given: the tag "sport" already exists (shared with other offers)
+        Tag existing = new Tag();
+        existing.setName("sport");
+        when(tagRepository.findByName("sport")).thenReturn(Optional.of(existing));
+
+        // When
+        Set<Tag> tags = createOfferWithTags(Set.of("Sport"));
+
+        // Then
+        assertThat(tags).containsExactly(existing);
+        verify(tagRepository, never()).save(any(Tag.class));
+    }
+
 }
