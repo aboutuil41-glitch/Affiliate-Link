@@ -46,3 +46,18 @@ class CampaignServiceTest {
         assertThat(ended.getStatus()).isEqualTo(Campaign.Status.ENDED);
     }
 
+    // ---------- create ----------
+
+    @Test
+    void shouldThrowNotFoundWhenOfferDoesNotExist() {
+        // Given
+        when(offerRepository.findById(7L)).thenReturn(Optional.empty());
+        CampaignRequest request = request(today(), today().plusDays(10), "100",
+                Campaign.PayoutModel.CPC, "5");
+
+        // When / Then
+        assertThatThrownBy(() -> service.create(7L, request))
+                .isInstanceOf(ResourceNotFoundException.class);
+        verify(campaignRepository, never()).save(any());
+    }
+
