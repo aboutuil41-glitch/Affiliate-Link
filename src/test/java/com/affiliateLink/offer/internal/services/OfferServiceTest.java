@@ -11,4 +11,17 @@ class OfferServiceTest {
 
     // ---------- create: advertiser rule ----------
 
+    @Test
+    void shouldRefuseOfferWhenAdvertiserIsNotActive() {
+        // Given
+        OfferRequest request = request(1L, Set.of("sport"));
+        doThrow(new BusinessRuleException("Advertiser is not active"))
+                .when(advertiserChecker).requireActive(1L);
+
+        // When / Then
+        assertThatThrownBy(() -> service.create(request))
+                .isInstanceOf(BusinessRuleException.class);
+        verify(offerRepository, never()).save(any());
+    }
+
 }
