@@ -34,3 +34,11 @@ class OfferSearchIT extends AbstractMySqlIT {
 
         assertThat(result.getTotalElements()).isEqualTo(2);
     }
+
+    @Test
+    void shouldFindOffersByAdvertiserAlone() {
+        Page<OfferResponse> result = service.search(null, 900L, null, null, PageRequest.of(0, 20));
+
+        assertThat(result.getTotalElements()).isEqualTo(2);
+    }
+
