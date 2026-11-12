@@ -78,3 +78,24 @@ class CampaignServiceTest {
         verify(campaignRepository, never()).save(any());
     }
 
+    @Test
+    void shouldCreateCampaignWhenRequestIsValid() {
+        // Given
+        Offer offer = mock(Offer.class);
+        when(offerRepository.findById(7L)).thenReturn(Optional.of(offer));
+        CampaignRequest request = request(today(), today().plusDays(10), "100",
+                Campaign.PayoutModel.CPC, "5");
+        Campaign entity = new Campaign();
+        CampaignResponse response = mock(CampaignResponse.class);
+        when(campaignMapper.toEntity(request)).thenReturn(entity);
+        when(campaignRepository.save(entity)).thenReturn(entity);
+        when(campaignMapper.toResponse(entity)).thenReturn(response);
+
+        // When
+        CampaignResponse result = service.create(7L, request);
+
+        // Then
+        assertThat(result).isSameAs(response);
+        assertThat(entity.getOffer()).isSameAs(offer);
+        verify(campaignRepository).save(entity);
+    }
