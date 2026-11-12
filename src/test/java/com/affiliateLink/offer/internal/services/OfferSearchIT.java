@@ -101,3 +101,11 @@ class OfferSearchIT extends AbstractMySqlIT {
                 .containsExactly("Zz Laptop Stand", "Zz Running Shoes", "Zz Yoga Mat");
     }
 
+    @Test
+    void shouldSortByTitleDescending() {
+        service.search(null, null, null, "zz", PageRequest.of(0, 20, Sort.by("title").descending()));
+
+        assertThat(mappedTitles)
+                .containsExactly("Zz Yoga Mat", "Zz Running Shoes", "Zz Laptop Stand");
+    }
+
