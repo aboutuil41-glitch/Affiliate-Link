@@ -82,3 +82,16 @@ class CampaignControllerTest {
                         .content("{\"status\":\"ACTIVE\"}"))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void shouldReturn409WhenStatusChangeIsForbidden() throws Exception {
+        doThrow(new BusinessRuleException("Cannot change campaign status from ENDED to ACTIVE"))
+                .when(campaignService).changeStatus(1L, Campaign.Status.ACTIVE);
+
+        mvc.perform(patch("/api/campaigns/1/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"status\":\"ACTIVE\"}"))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").exists());
+    }
+}
