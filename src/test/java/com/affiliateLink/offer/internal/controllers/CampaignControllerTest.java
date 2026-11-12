@@ -50,3 +50,14 @@ class CampaignControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.error").exists());
     }
+
+    // ---------- GET /api/campaigns ----------
+
+    @Test
+    void shouldReturn200WhenListingCampaigns() throws Exception {
+        when(campaignService.list(Campaign.Status.ACTIVE)).thenReturn(List.of());
+
+        mvc.perform(get("/api/campaigns?status=ACTIVE"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
