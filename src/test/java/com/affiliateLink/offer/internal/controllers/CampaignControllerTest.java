@@ -72,3 +72,13 @@ class CampaignControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    void shouldReturn404WhenCampaignDoesNotExist() throws Exception {
+        doThrow(new ResourceNotFoundException("Campaign not found: 99"))
+                .when(campaignService).changeStatus(99L, Campaign.Status.ACTIVE);
+
+        mvc.perform(patch("/api/campaigns/99/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"status\":\"ACTIVE\"}"))
+                .andExpect(status().isNotFound());
+    }
