@@ -161,3 +161,17 @@ class CampaignServiceTest {
         verify(campaignRepository).save(entity);
     }
 
+    // ---------- list ----------
+
+    @Test
+    void shouldListAllCampaignsWhenNoStatusGiven() {
+        // Given
+        when(campaignRepository.findAll()).thenReturn(List.of(new Campaign(), new Campaign()));
+
+        // When
+        List<CampaignResponse> result = service.list(null);
+
+        // Then
+        assertThat(result).hasSize(2);
+        verify(campaignRepository, never()).findByStatus(any());
+    }
