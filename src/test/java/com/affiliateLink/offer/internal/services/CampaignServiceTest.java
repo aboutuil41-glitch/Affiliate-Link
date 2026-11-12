@@ -118,3 +118,19 @@ class CampaignServiceTest {
         assertCreateIsRejected(
                 request(today(), today().plusDays(10), "0", Campaign.PayoutModel.CPC, "5"));
     }
+
+    @ParameterizedTest(name = "{0} with value {1} is rejected")
+    @CsvSource({
+            "CPC, 0",
+            "CPC, -1",
+            "CPL, 0",
+            "CPA_FIXED, 0",
+            "CPA_PERCENT, 0",
+            "CPA_PERCENT, -5",
+            "CPA_PERCENT, 100.01",
+            "CPA_PERCENT, 101"
+    })
+    void shouldRejectInvalidPayout(Campaign.PayoutModel model, BigDecimal value) {
+        assertCreateIsRejected(
+                request(today(), today().plusDays(10), "100", model, value.toPlainString()));
+    }
