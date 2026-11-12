@@ -93,4 +93,13 @@ class OfferServiceTest {
         verify(tagRepository, never()).save(any(Tag.class));
     }
 
+    @Test
+    void shouldCreateOfferWithNoTagsWhenTagsAreNull() {
+        // When
+        Set<Tag> tags = createOfferWithTags(null);
+
+        // Then
+        assertThat(tags).isEmpty();
+    }
+
 }
