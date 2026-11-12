@@ -25,3 +25,12 @@ class OfferSearchIT extends AbstractMySqlIT {
         offer("Zz Yoga Mat",      "zz-sport", 901L, fit);
         offer("Zz Laptop Stand",  "zz-tech",  900L, office);
     }
+
+    // ---------- each criterion alone ----------
+
+    @Test
+    void shouldFindOffersByNicheAlone() {
+        Page<OfferResponse> result = service.search("ZZ-Sport", null, null, null, PageRequest.of(0, 20));
+
+        assertThat(result.getTotalElements()).isEqualTo(2);
+    }
