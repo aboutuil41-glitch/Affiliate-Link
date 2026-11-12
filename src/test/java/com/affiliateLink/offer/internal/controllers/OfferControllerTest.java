@@ -58,3 +58,13 @@ class OfferControllerTest {
         mvc.perform(get("/api/offres?niche=fitness"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void shouldReturn400WhenSortFieldIsInvalid() throws Exception {
+        when(offerService.search(any(), any(), any(), any(), any()))
+                .thenThrow(new BadRequestException("Invalid sort field: banana"));
+
+        mvc.perform(get("/api/offres?sort=banana"))
+                .andExpect(status().isBadRequest());
+    }
+
