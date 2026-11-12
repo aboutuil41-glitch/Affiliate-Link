@@ -57,3 +57,12 @@ class OfferSearchIT extends AbstractMySqlIT {
         assertThat(mappedTitles).containsExactly("Zz Yoga Mat");
     }
 
+    // ---------- a combination ----------
+
+    @Test
+    void shouldCombineNicheAndAdvertiser() {
+        Page<OfferResponse> result = service.search("zz-sport", 900L, null, null, PageRequest.of(0, 20));
+
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(mappedTitles).containsExactly("Zz Running Shoes");
+    }
