@@ -53,3 +53,25 @@ public class CampaignStatusTest {
 
         assertThat(campaign.getStatus()).isEqualTo(to);
     }
+
+    @ParameterizedTest(name = "{0} -> {1} is forbidden")
+    @CsvSource({
+            "DRAFT, DRAFT",
+            "DRAFT, PAUSED",
+            "DRAFT, ENDED",
+            "ACTIVE, DRAFT",
+            "ACTIVE, ACTIVE",
+            "PAUSED, DRAFT",
+            "PAUSED, PAUSED",
+            "ENDED, DRAFT",
+            "ENDED, ACTIVE",
+            "ENDED, PAUSED",
+            "ENDED, ENDED"
+    })
+    void shouldRejectTransition(Campaign.Status from, Campaign.Status to) {
+        Campaign campaign = campaignWithStatus(from);
+
+        assertThatThrownBy(() -> campaign.changeStatus(to))
+                .isInstanceOf(BusinessRuleException.class);
+        assertThat(campaign.getStatus()).isEqualTo(from);
+    }
