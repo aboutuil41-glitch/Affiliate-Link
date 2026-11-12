@@ -109,3 +109,17 @@ class OfferSearchIT extends AbstractMySqlIT {
                 .containsExactly("Zz Yoga Mat", "Zz Running Shoes", "Zz Laptop Stand");
     }
 
+    // ---------- helpers ----------
+
+    private Tag tag(String name) {
+        Tag tag = new Tag();
+        tag.setName(name);
+        return tagRepository.save(tag);
+    }
+
+    private void offer(String title, String niche, Long advertiserId, Tag... tags) {
+        Offer offer = new Offer(advertiserId, title, "description", "https://example.com", niche);
+        offer.setTags(new HashSet<>(Arrays.asList(tags)));
+        offerRepository.save(offer);
+    }
+}
