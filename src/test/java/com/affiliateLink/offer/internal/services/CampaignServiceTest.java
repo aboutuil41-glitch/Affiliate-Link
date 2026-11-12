@@ -204,3 +204,17 @@ class CampaignServiceTest {
     private LocalDate today() {
         return LocalDate.now();
     }
+
+    // CampaignRequest is faked so we don't depend on its constructor.
+    // lenient() because each test only reaches some of these getters.
+    private CampaignRequest request(LocalDate start, LocalDate end, String budget,
+                                    Campaign.PayoutModel model, String payout) {
+        CampaignRequest r = mock(CampaignRequest.class);
+        lenient().when(r.startDate()).thenReturn(start);
+        lenient().when(r.endDate()).thenReturn(end);
+        lenient().when(r.budget()).thenReturn(new BigDecimal(budget));
+        lenient().when(r.payoutModel()).thenReturn(model);
+        lenient().when(r.payoutValue()).thenReturn(new BigDecimal(payout));
+        return r;
+    }
+
