@@ -102,4 +102,16 @@ class OfferServiceTest {
         assertThat(tags).isEmpty();
     }
 
+    // ---------- update ----------
+
+    @Test
+    void shouldThrowNotFoundWhenUpdatingUnknownOffer() {
+        // Given
+        when(offerRepository.findById(42L)).thenReturn(Optional.empty());
+        OfferUpdateRequest request = mock(OfferUpdateRequest.class);
+
+        // When / Then
+        assertThatThrownBy(() -> service.update(42L, request))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
 }
