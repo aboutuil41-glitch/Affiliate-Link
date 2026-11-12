@@ -38,3 +38,14 @@ class OfferControllerTest {
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.error").exists());
     }
+
+    @Test
+    void shouldReturn404WhenAdvertiserDoesNotExist() throws Exception {
+        when(offerService.create(any())).thenThrow(new ResourceNotFoundException("Advertiser not found"));
+
+        mvc.perform(post("/api/offres")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_OFFER))
+                .andExpect(status().isNotFound());
+    }
+
