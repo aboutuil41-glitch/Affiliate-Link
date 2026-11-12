@@ -8,3 +8,11 @@ class CampaignServiceTest {
 
     @InjectMocks CampaignService service;
 
+    @Test
+    void shouldThrowNotFoundWhenCampaignDoesNotExist() {
+        when(campaignRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> service.changeStatus(99L, Campaign.Status.ACTIVE))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
