@@ -20,3 +20,11 @@ public class CampaignStatusTest {
         assertThatThrownBy(() -> campaign.changeStatus(Campaign.Status.PAUSED)).isInstanceOf(BusinessRuleException.class);
     }
 
+    @Test
+    void shouldRejectActivationWhenEndDateIsPast() {
+        Campaign campaign = new Campaign();
+        campaign.setEndDate(LocalDate.now().minusDays(10));
+
+        assertThatThrownBy(() -> campaign.changeStatus(Campaign.Status.ACTIVE)).isInstanceOf(BusinessRuleException.class);
+    }
+
