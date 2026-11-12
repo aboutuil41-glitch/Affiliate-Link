@@ -24,4 +24,16 @@ class OfferServiceTest {
         verify(offerRepository, never()).save(any());
     }
 
+    @Test
+    void shouldRefuseOfferWhenAdvertiserDoesNotExist() {
+        // Given
+        OfferRequest request = request(99L, Set.of("sport"));
+        doThrow(new ResourceNotFoundException("Advertiser not found: 99"))
+                .when(advertiserChecker).requireActive(99L);
+
+        // When / Then
+        assertThatThrownBy(() -> service.create(request))
+                .isInstanceOf(ResourceNotFoundException.class);
+        verify(offerRepository, never()).save(any());
+    }
 }
