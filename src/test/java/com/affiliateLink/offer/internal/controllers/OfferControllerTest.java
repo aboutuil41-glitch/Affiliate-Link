@@ -85,3 +85,12 @@ class OfferControllerTest {
                 .andExpect(jsonPath("$.error").exists());
     }
 
+    // ---------- PUT /api/offres/{id} ----------
+
+    @Test
+    void shouldReturn200WhenOfferIsUpdated() throws Exception {
+        mvc.perform(put("/api/offres/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_OFFER))
+                .andExpect(status().isOk());
+    }
