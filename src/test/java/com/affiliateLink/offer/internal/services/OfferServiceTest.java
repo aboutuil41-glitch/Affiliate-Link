@@ -133,4 +133,17 @@ class OfferServiceTest {
         verify(offer).setTags(captor.capture());
         assertThat(captor.getValue()).extracting(Tag::getName).containsExactly("gym");
     }
+
+    // ---------- get ----------
+
+    @Test
+    void shouldThrowNotFoundWhenOfferDoesNotExist() {
+        // Given
+        when(offerRepository.findById(42L)).thenReturn(Optional.empty());
+
+        // When / Then
+        assertThatThrownBy(() -> service.get(42L))
+                .isInstanceOf(ResourceNotFoundException.class);
+    }
+
 }
