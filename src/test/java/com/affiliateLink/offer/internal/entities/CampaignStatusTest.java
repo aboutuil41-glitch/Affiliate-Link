@@ -75,3 +75,12 @@ public class CampaignStatusTest {
                 .isInstanceOf(BusinessRuleException.class);
         assertThat(campaign.getStatus()).isEqualTo(from);
     }
+
+    private Campaign campaignWithStatus(Campaign.Status status) {
+        Campaign campaign = new Campaign();
+        campaign.setEndDate(LocalDate.now().plusDays(30));
+        ReflectionTestUtils.setField(campaign, "status", status);
+        return campaign;
+    }
+
+    }
