@@ -28,3 +28,13 @@ class OfferControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void shouldReturn409WhenAdvertiserIsNotActive() throws Exception {
+        when(offerService.create(any())).thenThrow(new BusinessRuleException("Advertiser is not active"));
+
+        mvc.perform(post("/api/offres")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_OFFER))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").exists());
+    }
