@@ -32,3 +32,17 @@ class CampaignServiceTest {
         assertThat(toActivate.getStatus()).isEqualTo(Campaign.Status.ACTIVE);
         assertThat(alreadyActive.getStatus()).isEqualTo(Campaign.Status.PAUSED);
     }
+
+    @Test
+    void shouldRefuseForbiddenStatusChange() {
+        // Given: an ended campaign can't go anywhere
+        Offer offer = mock(Offer.class);
+        Campaign ended = campaign(1L, Campaign.Status.ENDED, offer);
+        when(campaignRepository.findById(1L)).thenReturn(Optional.of(ended));
+
+        // When / Then
+        assertThatThrownBy(() -> service.changeStatus(1L, Campaign.Status.ACTIVE))
+                .isInstanceOf(BusinessRuleException.class);
+        assertThat(ended.getStatus()).isEqualTo(Campaign.Status.ENDED);
+    }
+
