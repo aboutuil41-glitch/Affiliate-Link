@@ -19,3 +19,12 @@ class CampaignControllerTest {
                         .content(VALID_CAMPAIGN))
                 .andExpect(status().isCreated());
     }
+
+    @Test
+    void shouldReturn400WhenCampaignBodyIsInvalid() throws Exception {
+        mvc.perform(post("/api/offres/1/campaigns")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
