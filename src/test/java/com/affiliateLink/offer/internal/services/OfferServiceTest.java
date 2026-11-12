@@ -160,4 +160,24 @@ class OfferServiceTest {
                 .findAll(ArgumentMatchers.<Specification<Offer>>any(), any(Pageable.class));
     }
 
+    @Test
+    void shouldAcceptSortOnAllowedFields() {
+        // Given
+        Offer offer = mock(Offer.class);
+        OfferResponse response = mock(OfferResponse.class);
+        Page<Offer> page = new PageImpl<>(List.of(offer));
+        when(offerRepository.findAll(ArgumentMatchers.<Specification<Offer>>any(), any(Pageable.class)))
+                .thenReturn(page);
+        when(offerMapper.toResponse(offer)).thenReturn(response);
+
+        for (String field : List.of("title", "createdAt", "niche")) {
+            // When
+            Page<OfferResponse> result = service.search(null, null, null, null,
+                    PageRequest.of(0, 10, Sort.by(field)));
+
+            // Then
+            assertThat(result.getContent()).containsExactly(response);
+        }
+    }
+
 }
