@@ -11,3 +11,12 @@ public class CampaignStatusTest {
 
         assertThat(campaign.getStatus()).isEqualTo(Campaign.Status.ACTIVE);
     }
+
+    @Test
+    void shouldRejectDraftToPaused(){
+        Campaign campaign = new Campaign();
+        campaign.setEndDate(LocalDate.now().plusDays(10));
+
+        assertThatThrownBy(() -> campaign.changeStatus(Campaign.Status.PAUSED)).isInstanceOf(BusinessRuleException.class);
+    }
+
