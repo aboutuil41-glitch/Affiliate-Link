@@ -103,3 +103,14 @@ class OfferControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    void shouldReturn404WhenUpdatingUnknownOffer() throws Exception {
+        when(offerService.update(anyLong(), any()))
+                .thenThrow(new ResourceNotFoundException("Offer not found: 99"));
+
+        mvc.perform(put("/api/offres/99")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_OFFER))
+                .andExpect(status().isNotFound());
+    }
+}
