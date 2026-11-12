@@ -36,4 +36,21 @@ class OfferServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class);
         verify(offerRepository, never()).save(any());
     }
+
+    // ---------- create: tag rules ----------
+
+    @Test
+    void shouldStoreTagsInLowercaseAndTrimmed() {
+        // Given: both tags are new
+        when(tagRepository.findByName("fitness")).thenReturn(Optional.empty());
+        when(tagRepository.findByName("health")).thenReturn(Optional.empty());
+        when(tagRepository.save(any(Tag.class))).thenAnswer(i -> i.getArgument(0));
+
+        // When
+        Set<Tag> tags = createOfferWithTags(Set.of("  Fitness ", "HEALTH"));
+
+        // Then
+        assertThat(tags).extracting(Tag::getName)
+                .containsExactlyInAnyOrder("fitness", "health");
+    }
 }
