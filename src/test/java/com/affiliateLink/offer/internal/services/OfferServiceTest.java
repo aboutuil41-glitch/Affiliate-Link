@@ -195,4 +195,28 @@ class OfferServiceTest {
         // Then
         assertThat(result.getTotalElements()).isEqualTo(1);
     }
+
+    // ---------- helpers ----------
+
+    // Runs create() with the given tag names and returns the tags the offer ended up with
+    private Set<Tag> createOfferWithTags(Set<String> tagNames) {
+        OfferRequest request = request(1L, tagNames);
+        Offer offer = mock(Offer.class);
+        when(offerMapper.toEntity(request)).thenReturn(offer);
+        when(offerRepository.save(offer)).thenReturn(offer);
+
+        service.create(request);
+
+        ArgumentCaptor<Set<Tag>> captor = ArgumentCaptor.captor();
+        verify(offer).setTags(captor.capture());
+        return captor.getValue();
+    }
+
+    // OfferRequest is faked so we don't depend on its constructor
+    private OfferRequest request(Long advertiserId, Set<String> tags) {
+        OfferRequest r = mock(OfferRequest.class);
+        lenient().when(r.advertiserId()).thenReturn(advertiserId);
+        lenient().when(r.tags()).thenReturn(tags);
+        return r;
+    }
 }
