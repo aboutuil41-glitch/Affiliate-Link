@@ -68,3 +68,10 @@ class OfferControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    // ---------- GET /api/offres/{id} ----------
+
+    @Test
+    void shouldReturn200WhenOfferExists() throws Exception {
+        mvc.perform(get("/api/offres/1"))
+                .andExpect(status().isOk());
+    }
