@@ -114,4 +114,23 @@ class OfferServiceTest {
         assertThatThrownBy(() -> service.update(42L, request))
                 .isInstanceOf(ResourceNotFoundException.class);
     }
+
+    @Test
+    void shouldNormalizeTagsWhenUpdatingAnOffer() {
+        // Given
+        Offer offer = mock(Offer.class);
+        when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
+        OfferUpdateRequest request = mock(OfferUpdateRequest.class);
+        when(request.tags()).thenReturn(Set.of("  GYM "));
+        when(tagRepository.findByName("gym")).thenReturn(Optional.empty());
+        when(tagRepository.save(any(Tag.class))).thenAnswer(i -> i.getArgument(0));
+
+        // When
+        service.update(1L, request);
+
+        // Then
+        ArgumentCaptor<Set<Tag>> captor = ArgumentCaptor.captor();
+        verify(offer).setTags(captor.capture());
+        assertThat(captor.getValue()).extracting(Tag::getName).containsExactly("gym");
+    }
 }
