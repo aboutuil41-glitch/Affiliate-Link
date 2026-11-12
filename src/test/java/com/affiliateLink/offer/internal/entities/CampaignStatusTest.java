@@ -1,4 +1,16 @@
 package com.affiliateLink.offer.internal.entities;
+
+import com.affiliateLink.common.exception.BusinessRuleException;
+import org.junit.jupiter.api.Test;
+import java.time.LocalDate;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+
 public class CampaignStatusTest {
 
     @Test
