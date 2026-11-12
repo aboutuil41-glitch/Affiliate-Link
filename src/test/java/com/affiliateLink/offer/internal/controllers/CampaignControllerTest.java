@@ -61,3 +61,14 @@ class CampaignControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
     }
+
+    // ---------- PATCH /api/campaigns/{id}/status ----------
+
+    @Test
+    void shouldReturn204WhenStatusIsChanged() throws Exception {
+        mvc.perform(patch("/api/campaigns/1/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"status\":\"ACTIVE\"}"))
+                .andExpect(status().isNoContent());
+    }
+
