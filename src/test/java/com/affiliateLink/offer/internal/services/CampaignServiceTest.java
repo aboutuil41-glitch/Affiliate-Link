@@ -113,3 +113,8 @@ class CampaignServiceTest {
                 request(today(), today().minusDays(1), "100", Campaign.PayoutModel.CPC, "5"));
     }
 
+    @Test
+    void shouldRejectBudgetOfZero() {
+        assertCreateIsRejected(
+                request(today(), today().plusDays(10), "0", Campaign.PayoutModel.CPC, "5"));
+    }
