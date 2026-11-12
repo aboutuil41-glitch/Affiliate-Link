@@ -134,3 +134,30 @@ class CampaignServiceTest {
         assertCreateIsRejected(
                 request(today(), today().plusDays(10), "100", model, value.toPlainString()));
     }
+
+    @ParameterizedTest(name = "{0} with value {1} is accepted")
+    @CsvSource({
+            "CPC, 0.01",
+            "CPL, 5",
+            "CPA_FIXED, 100",
+            "CPA_PERCENT, 0.1",
+            "CPA_PERCENT, 50",
+            "CPA_PERCENT, 100"
+    })
+    void shouldAcceptValidPayout(Campaign.PayoutModel model, BigDecimal value) {
+        // Given
+        Offer offer = mock(Offer.class);
+        when(offerRepository.findById(7L)).thenReturn(Optional.of(offer));
+        CampaignRequest request = request(today(), today().plusDays(10), "100",
+                model, value.toPlainString());
+        Campaign entity = new Campaign();
+        when(campaignMapper.toEntity(request)).thenReturn(entity);
+        when(campaignRepository.save(entity)).thenReturn(entity);
+
+        // When
+        service.create(7L, request);
+
+        // Then
+        verify(campaignRepository).save(entity);
+    }
+
