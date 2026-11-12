@@ -20,3 +20,11 @@ class OfferControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    void shouldReturn400WhenOfferBodyIsInvalid() throws Exception {
+        mvc.perform(post("/api/offres")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{}"))
+                .andExpect(status().isBadRequest());
+    }
+
