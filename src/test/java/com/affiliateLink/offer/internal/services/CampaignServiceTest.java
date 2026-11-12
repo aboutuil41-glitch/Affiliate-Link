@@ -99,3 +99,17 @@ class CampaignServiceTest {
         assertThat(entity.getOffer()).isSameAs(offer);
         verify(campaignRepository).save(entity);
     }
+
+    // ---------- validation rules ----------
+
+    @Test
+    void shouldRejectEndDateEqualToStartDate() {
+        assertCreateIsRejected(request(today(), today(), "100", Campaign.PayoutModel.CPC, "5"));
+    }
+
+    @Test
+    void shouldRejectEndDateBeforeStartDate() {
+        assertCreateIsRejected(
+                request(today(), today().minusDays(1), "100", Campaign.PayoutModel.CPC, "5"));
+    }
+
