@@ -75,3 +75,13 @@ class OfferControllerTest {
         mvc.perform(get("/api/offres/1"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void shouldReturn404WhenOfferDoesNotExist() throws Exception {
+        when(offerService.get(99L)).thenThrow(new ResourceNotFoundException("Offer not found: 99"));
+
+        mvc.perform(get("/api/offres/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").exists());
+    }
+
