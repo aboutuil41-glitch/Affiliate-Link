@@ -218,3 +218,13 @@ class CampaignServiceTest {
         return r;
     }
 
+    // id and status have no setters, so we set them directly for the test
+    private Campaign campaign(Long id, Campaign.Status status, Offer offer) {
+        Campaign c = new Campaign();
+        c.setEndDate(LocalDate.now().plusDays(30));
+        c.setOffer(offer);
+        ReflectionTestUtils.setField(c, "id", id);
+        ReflectionTestUtils.setField(c, "status", status);
+        return c;
+    }
+}
