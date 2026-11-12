@@ -49,3 +49,11 @@ class OfferSearchIT extends AbstractMySqlIT {
         assertThat(result.getTotalElements()).isEqualTo(2);
     }
 
+    @Test
+    void shouldFindOffersByKeywordInTitleAlone() {
+        Page<OfferResponse> result = service.search(null, null, null, "zz yoga", PageRequest.of(0, 20));
+
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(mappedTitles).containsExactly("Zz Yoga Mat");
+    }
+
