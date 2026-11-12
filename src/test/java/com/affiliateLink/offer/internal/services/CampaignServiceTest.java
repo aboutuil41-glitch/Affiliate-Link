@@ -61,3 +61,20 @@ class CampaignServiceTest {
         verify(campaignRepository, never()).save(any());
     }
 
+    @Test
+    void shouldRefuseCampaignWhenAdvertiserIsNotActive() {
+        // Given
+        Offer offer = mock(Offer.class);
+        when(offer.getAdvertiserId()).thenReturn(1L);
+        when(offerRepository.findById(7L)).thenReturn(Optional.of(offer));
+        doThrow(new BusinessRuleException("Advertiser is not active"))
+                .when(advertiserChecker).requireActive(1L);
+        CampaignRequest request = request(today(), today().plusDays(10), "100",
+                Campaign.PayoutModel.CPC, "5");
+
+        // When / Then
+        assertThatThrownBy(() -> service.create(7L, request))
+                .isInstanceOf(BusinessRuleException.class);
+        verify(campaignRepository, never()).save(any());
+    }
+
