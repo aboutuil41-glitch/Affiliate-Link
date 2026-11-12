@@ -180,4 +180,19 @@ class OfferServiceTest {
         }
     }
 
+    @Test
+    void shouldSearchWithNoCriteriaAtAll() {
+        // Given
+        Offer offer = mock(Offer.class);
+        OfferResponse response = mock(OfferResponse.class);
+        when(offerRepository.findAll(ArgumentMatchers.<Specification<Offer>>any(), any(Pageable.class)))
+                .thenReturn(new PageImpl<>(List.of(offer)));
+        when(offerMapper.toResponse(offer)).thenReturn(response);
+
+        // When
+        Page<OfferResponse> result = service.search(null, null, null, null, PageRequest.of(0, 20));
+
+        // Then
+        assertThat(result.getTotalElements()).isEqualTo(1);
+    }
 }
