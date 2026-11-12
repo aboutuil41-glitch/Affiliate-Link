@@ -38,3 +38,18 @@ public class CampaignStatusTest {
         assertThat(campaign.getStatus()).isEqualTo(Campaign.Status.ACTIVE);
     }
 
+    @ParameterizedTest(name = "{0} -> {1} is allowed")
+    @CsvSource({
+            "DRAFT, ACTIVE",
+            "ACTIVE, PAUSED",
+            "ACTIVE, ENDED",
+            "PAUSED, ACTIVE",
+            "PAUSED, ENDED"
+    })
+    void shouldAllowTransition(Campaign.Status from, Campaign.Status to) {
+        Campaign campaign = campaignWithStatus(from);
+
+        campaign.changeStatus(to);
+
+        assertThat(campaign.getStatus()).isEqualTo(to);
+    }
