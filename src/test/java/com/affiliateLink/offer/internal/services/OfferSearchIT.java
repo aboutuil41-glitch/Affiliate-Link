@@ -66,3 +66,14 @@ class OfferSearchIT extends AbstractMySqlIT {
         assertThat(result.getTotalElements()).isEqualTo(1);
         assertThat(mappedTitles).containsExactly("Zz Running Shoes");
     }
+
+    // ---------- no criteria ----------
+
+    @Test
+    void shouldReturnAllOffersWhenNoCriteria() {
+        Page<OfferResponse> result = service.search(null, null, null, null, PageRequest.of(0, 100));
+
+        // our 3 offers plus whatever seed data exists
+        assertThat(result.getTotalElements()).isGreaterThanOrEqualTo(3);
+        assertThat(mappedTitles).contains("Zz Running Shoes", "Zz Yoga Mat", "Zz Laptop Stand");
+    }
