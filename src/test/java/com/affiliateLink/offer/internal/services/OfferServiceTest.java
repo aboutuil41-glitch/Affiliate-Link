@@ -53,4 +53,19 @@ class OfferServiceTest {
         assertThat(tags).extracting(Tag::getName)
                 .containsExactlyInAnyOrder("fitness", "health");
     }
+
+    @Test
+    void shouldNotDuplicateTagsThatDifferOnlyByCase() {
+        // Given: "Sport" and "sport " are the same tag
+        when(tagRepository.findByName("sport")).thenReturn(Optional.empty());
+        when(tagRepository.save(any(Tag.class))).thenAnswer(i -> i.getArgument(0));
+
+        // When
+        Set<Tag> tags = createOfferWithTags(Set.of("Sport", "sport "));
+
+        // Then: one tag, created once
+        assertThat(tags).hasSize(1);
+        verify(tagRepository, times(1)).save(any(Tag.class));
+    }
+
 }
