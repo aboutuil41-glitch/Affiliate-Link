@@ -38,3 +38,15 @@ class CampaignControllerTest {
                         .content(VALID_CAMPAIGN))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void shouldReturn409WhenAdvertiserIsNotActive() throws Exception {
+        when(campaignService.create(anyLong(), any()))
+                .thenThrow(new BusinessRuleException("Advertiser is not active"));
+
+        mvc.perform(post("/api/offres/1/campaigns")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(VALID_CAMPAIGN))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").exists());
+    }
