@@ -68,6 +68,7 @@ public class OfferService {
         return offerMapper.toDetailResponse(findOffer(id));
     }
 
+    // All filters are optional and can be combined
     @Transactional(readOnly = true)
     public Page<OfferResponse> search(String niche, Long advertiserId, String tag,
                                       String keyword, Pageable pageable) {
@@ -109,11 +110,16 @@ public class OfferService {
         if (names == null) {
             return tags;
         }
+        // Clean the names first: lowercase, trimmed, no blanks, no duplicates
+        Set<String> cleanNames = new HashSet<>();
         for (String raw : names) {
             String name = raw.trim().toLowerCase();
-            if (name.isEmpty()) {
-                continue;
+            if (!name.isEmpty()) {
+                cleanNames.add(name);
             }
+        }
+
+        for (String name : cleanNames) {
             Tag tag = tagRepository.findByName(name).orElse(null);
             if (tag == null) {
                 tag = new Tag();
