@@ -175,3 +175,18 @@ class CampaignServiceTest {
         assertThat(result).hasSize(2);
         verify(campaignRepository, never()).findByStatus(any());
     }
+
+    @Test
+    void shouldListOnlyCampaignsWithGivenStatus() {
+        // Given
+        when(campaignRepository.findByStatus(Campaign.Status.ACTIVE))
+                .thenReturn(List.of(new Campaign()));
+
+        // When
+        List<CampaignResponse> result = service.list(Campaign.Status.ACTIVE);
+
+        // Then
+        assertThat(result).hasSize(1);
+        verify(campaignRepository, never()).findAll();
+    }
+
