@@ -28,3 +28,13 @@ public class CampaignStatusTest {
         assertThatThrownBy(() -> campaign.changeStatus(Campaign.Status.ACTIVE)).isInstanceOf(BusinessRuleException.class);
     }
 
+    @Test
+    void shouldAllowActivationWhenEndDateIsToday() {
+        Campaign campaign = new Campaign();
+        campaign.setEndDate(LocalDate.now());
+
+        campaign.changeStatus(Campaign.Status.ACTIVE);
+
+        assertThat(campaign.getStatus()).isEqualTo(Campaign.Status.ACTIVE);
+    }
+
